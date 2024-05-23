@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://https://t-bchat-server.vercel.app/';
+const API_URL = 'https://https://t-bchat-server.vercel.app/webhook';
 
 export const sendMessage = async (message) => {
     try {
@@ -11,3 +11,4 @@ export const sendMessage = async (message) => {
         throw error;
     }
 };
+
