@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
-require('dotenv').config();
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 9000;
@@ -10,9 +10,9 @@ const PORT = process.env.PORT || 9000;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
-
+// Configure CORS to allow requests from your frontend URL
 app.use(cors({
-    origin: 'https://t-bchat-frontend.vercel.app', // Replace with your frontend URL
+    origin: 'https://t-bchat-frontend.vercel.app',
 }));
 
 app.use(bodyParser.json());
