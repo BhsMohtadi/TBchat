@@ -4,17 +4,17 @@ const request = require('request');
 require('dotenv').config();
 const cors = require('cors');
 
-
-
-
 const app = express();
 const PORT = process.env.PORT || 9000;
 
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
-const WHATSAPP_ACCESS_TOKEN = process.env.WHATSAPP_ACCESS_TOKEN;
 
-app.use(cors());
+
+app.use(cors({
+    origin: 'https://t-bchat-frontend.vercel.app', // Replace with your frontend URL
+}));
+
 app.use(bodyParser.json());
 
 // Facebook Webhook verification
@@ -30,6 +30,8 @@ app.post('/webhook', (req, res) => {
         } else {
             res.sendStatus(403);
         }
+    } else {
+        res.sendStatus(400);
     }
 });
 
@@ -54,14 +56,6 @@ app.post('/webhook', (req, res) => {
     } else {
         res.sendStatus(404);
     }
-});
-
-// WhatsApp Webhook endpoint to receive messages
-app.post('/whatsapp-webhook', (req, res) => {
-    const body = req.body;
-    console.log('Received WhatsApp webhook:', body);
-
-    res.status(200).send('EVENT_RECEIVED');
 });
 
 function handleMessage(sender_psid, received_message) {
