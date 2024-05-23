@@ -1,14 +1,15 @@
 import axios from 'axios';
 
-const API_URL = 'https://b775-196-179-179-223.ngrok-free.app';
+// Assuming the backend endpoint for sending messages is /api/messages
+const API_URL = 'http://localhost:9000'; // Adjusted to localhost for local development
 
 export const sendMessage = async (message) => {
     try {
-        const response = await axios.post(`${API_URL}/webhook`, { message });
+        // Adjusted the endpoint to match the backend's expected path
+        const response = await axios.post(`${API_URL}/api/messages`, { message });
         return response.data;
     } catch (error) {
         console.error('Error sending message:', error);
         throw error;
     }
 };
-
