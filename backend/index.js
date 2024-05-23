@@ -17,6 +17,12 @@ app.use((req, res, next) => {
     next();
   });
 
+  const corsOptions = {
+    origin: 'https://t-bchat-frontend.vercel.app' // Replace with your frontend URL
+  };
+  
+  app.use(cors(corsOptions));
+
 app.use(bodyParser.json());
 
 app.options('*', cors());
