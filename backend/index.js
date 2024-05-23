@@ -10,7 +10,6 @@ const PORT = process.env.PORT || 9000;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
-// Configure CORS
 app.use(cors({
     origin: 'https://t-bchat-frontend.vercel.app',
     methods: ['GET', 'POST', 'OPTIONS'],
@@ -19,7 +18,8 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
-// Facebook Webhook verification
+app.options('*', cors());
+
 app.get('/webhook', (req, res) => {
     const mode = req.query['hub.mode'];
     const token = req.query['hub.verify_token'];
@@ -37,7 +37,6 @@ app.get('/webhook', (req, res) => {
     }
 });
 
-// Webhook endpoint to receive messages
 app.post('/webhook', (req, res) => {
     const body = req.body;
 

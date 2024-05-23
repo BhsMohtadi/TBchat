@@ -1,37 +1,23 @@
 // WebhookButton.js
 import React, { useState } from 'react';
+import axios from './axios';
 
-const WebhookButton = () => {
+const App = () => {
     const [responseMessage, setResponseMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleClick = () => {
         const payload = {
-            // Your payload data here
             message: "Hello from the frontend!"
         };
 
-        fetch('https://t-bchat-server.vercel.app/webhook', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log(data);
-            setResponseMessage('Message sent successfully!');
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            setErrorMessage('Failed to send message.');
-        });
+        axios.post('/webhook', payload)
+            .then(response => {
+                setResponseMessage('Message sent successfully!');
+            })
+            .catch(error => {
+                setErrorMessage('Failed to send message.');
+            });
     };
 
     return (
@@ -43,4 +29,5 @@ const WebhookButton = () => {
     );
 };
 
-export default WebhookButton;
+export default App;
+

@@ -1,0 +1,17 @@
+{
+    "projects": [
+      {
+        "name": "t-bchat-frontend",
+        "src": "frontend/",
+        "buildCommand": "npm run build",
+        "outputDirectory": "frontend/build"
+      },
+      {
+        "name": "t-bchat-server",
+        "src": "backend/",
+        "buildCommand": "npm install",
+        "outputDirectory": ""
+      }
+    ]
+  }
+  
