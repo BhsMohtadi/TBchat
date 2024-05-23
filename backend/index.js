@@ -13,7 +13,7 @@ const WHATSAPP_ACCESS_TOKEN = process.env.WHATSAPP_ACCESS_TOKEN;
 app.use(bodyParser.json());
 
 // Facebook Webhook verification
-app.get('/webhook', (req, res) => {
+app.post('/webhook', (req, res) => {
     const mode = req.query['hub.mode'];
     const token = req.query['hub.verify_token'];
     const challenge = req.query['hub.challenge'];
