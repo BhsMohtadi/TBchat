@@ -2,6 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
 require('dotenv').config();
+const cors = require('cors');
+
+
+
 
 const app = express();
 const PORT = process.env.PORT || 9000;
@@ -10,6 +14,7 @@ const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const WHATSAPP_ACCESS_TOKEN = process.env.WHATSAPP_ACCESS_TOKEN;
 
+app.use(cors());
 app.use(bodyParser.json());
 
 // Facebook Webhook verification
