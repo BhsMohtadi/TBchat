@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
 const cors = require('cors');
+const fs = require('fs');
+const https = require('https');
 require('dotenv').config();
 
 const app = express();
@@ -10,21 +12,25 @@ const PORT = process.env.PORT || 9000;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
+// Set up SSL
+const options = {
+    key: fs.readFileSync('./ssl-certs/server.key'), // Path to your SSL key
+    cert: fs.readFileSync('./ssl-certs/server.crt') // Path to your SSL certificate
+};
+
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'https://t-bchat-frontend.vercel.app'); // Replace with your frontend URL
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
-  });
+});
 
-  const corsOptions = {
+const corsOptions = {
     origin: 'https://t-bchat-frontend.vercel.app' // Replace with your frontend URL
-  };
-  
-  app.use(cors(corsOptions));
+};
 
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
-
 app.options('*', cors());
 
 app.get('/webhook', (req, res) => {
@@ -118,6 +124,7 @@ function callSendAPI(sender_psid, response) {
     });
 }
 
-app.listen(PORT, () => {
+// Create HTTPS server
+https.createServer(options, app).listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
